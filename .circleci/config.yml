@@ -28,7 +28,7 @@ jobs:
           command: dotnet build src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
       - run:
           name: Test
-          command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --configuration $BUILD_CONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger:trx --results-directory test-results
+          command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --configuration $BUILD_CONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger:trx --results-directory ~/test-results
       - store_test_results:
           path: test-results
       - persist_to_workspace:
@@ -44,11 +44,10 @@ jobs:
           at: src
       - run:
           name: Install Lambda Tools
-          command: dotnet tool install -g Amazon.Lambda.Tools
+          command: |
+            dotnet tool install -g Amazon.Lambda.Tools
+            echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
       - aws-config
-      - run:
-          name: List Lambda Tools
-          command: ls /root/.dotnet/tools
       - run:
           name: Deploy Stack to AWS
           command: dotnet lambda deploy-serverless --project-location src/estate-cloud-contacts-service --stackname estate-cloud-contacts-service --profile personal --region $AWS_DEFAULT_REGION --s3-bucket $AWS_ARTIFACT_BUCKET
