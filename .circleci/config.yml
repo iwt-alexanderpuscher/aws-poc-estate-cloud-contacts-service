@@ -96,7 +96,10 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy:
+      - request-deploy:
           type: approval
           requires:
             - build
+      - deploy:
+          requires:
+            - request-deploy

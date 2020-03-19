@@ -1,4 +1,6 @@
 # AWS Serverless Application Model fo ASP.Net Core Apps
+![CircleCI](https://img.shields.io/circleci/build/github/sevensc/typescript-string-operations?logo=circleci&token=e3f75ec3d21d6da12384faf594c9d05fe9f65747)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=iwt-alexanderpuscher_aws-poc-estate-cloud-contacts-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=iwt-alexanderpuscher_aws-poc-estate-cloud-contacts-service)
 
 https://medium.com/@ravi.aakula/aws-serverless-application-model-for-asp-net-core-apps-1ce03e0e389d
 
