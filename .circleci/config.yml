@@ -44,7 +44,9 @@ jobs:
           at: src
       - run:
           name: Install Lambda Tools
-          command: dotnet tool install -g Amazon.Lambda.Tools
+          command: |
+            dotnet tool install -g Amazon.Lambda.Tools
+            export PATH="$PATH:/root/.dotnet/tools"
       - aws-config
       - run:
           name: Deploy Stack to AWS
