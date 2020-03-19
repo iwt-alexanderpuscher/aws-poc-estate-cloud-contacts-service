@@ -43,11 +43,11 @@ jobs:
           paths:
             - estate-cloud-contacts-service
       - run:
-          name: Test
+          name: Generate Lambda Package
           command: |
             dotnet tool install -g Amazon.Lambda.Tools
             export PATH="$PATH:/root/.dotnet/tools"
-            dotnet lambda package --configuration $BUILD_CONFIGURATION --framework netcoreapp2.1 --output-package ~/project/artifacts/deploy-package.zip
+            dotnet lambda package-ci --project-location src/estate-cloud-contacts-service --configuration $BUILD_CONFIGURATION --framework netcoreapp2.1 --output-package ~/project/artifacts/deploy-package.zip
       - store_artifacts:
           path: ~/project/artifacts
           destination: .
