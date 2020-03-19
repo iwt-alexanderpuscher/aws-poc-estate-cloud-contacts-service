@@ -22,17 +22,17 @@ jobs:
       - checkout
       - run:
           name: Restore
-          command: dotnet restore src\estate-cloud-contacts-service\estate-cloud-contacts-service.csproj
+          command: dotnet restore src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj
       - run:
           name: Build
-          command: dotnet build src\estate-cloud-contacts-service\estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
+          command: dotnet build src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
       - run:
           name: Test
-          command: dotnet test test\estate-cloud-contacts-service.Tests\estate-cloud-contacts-service.Tests.csproj --no-build --configuration $BUILD_CONFIGURATION
+          command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --no-build --configuration $BUILD_CONFIGURATION
       - persist_to_workspace:
           root: workspace
           paths:
-            - src\estate-cloud-contacts-service
+            - src/estate-cloud-contacts-service
 
   deploy:
     docker:
