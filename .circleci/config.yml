@@ -30,7 +30,7 @@ jobs:
           name: Test
           command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
       - run:
-          name: test results
+          name: Convert Test Results
           when: always
           command: |
             dotnet tool install -g trx2junit
@@ -76,7 +76,6 @@ workflows:
           webhook: $IWT_SMARTA_DEVOPS_WEBHOOK
           requires:
             - build
-            - deploy
           filters:
             branches:
               only: master
