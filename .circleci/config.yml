@@ -42,6 +42,12 @@ jobs:
           root: src
           paths:
             - estate-cloud-contacts-service
+      - run:
+          name: Test
+          command: dotnet lambda package --configuration $BUILD_CONFIGURATION --framework netcoreapp2.1 --output-package ~/project/artifacts/deploy-package.zip
+      - store_artifacts:
+          path: ~/project/artifacts
+          destination: .
 
   deploy:
     docker:
