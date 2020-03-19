@@ -45,13 +45,10 @@ jobs:
       - run:
           name: Install Lambda Tools
           command: dotnet tool install -g Amazon.Lambda.Tools
-      - run:
-          name: Add .NET Core SDK tools
-          command: export PATH="$PATH:/root/.dotnet/tools"
       - aws-config
       - run:
           name: Deploy Stack to AWS
-          command: dotnet lambda deploy-serverless --stackname estate-cloud-contacts-service --profile personal --region $AWS_DEFAULT_REGION --s3-bucket $AWS_ARTIFACT_BUCKET
+          command: /root/.dotnet/tools/dotnet lambda deploy-serverless --stackname estate-cloud-contacts-service --profile personal --region $AWS_DEFAULT_REGION --s3-bucket $AWS_ARTIFACT_BUCKET
 
 orbs:
   slack: circleci/slack@3.4.2
