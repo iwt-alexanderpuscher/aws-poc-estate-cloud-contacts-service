@@ -49,10 +49,8 @@ jobs:
       - run:
           name: Add .NET Core SDK tools
           command: |
-            cat << \EOF >> ~/.bash_profile
-            # Add .NET Core SDK tools
-            export PATH="$PATH:/root/.dotnet/tools"
-            EOF
+            echo [default] >> ~/.bash_profile
+            echo export PATH="$PATH:/root/.dotnet/tools"  >> ~/.bash_profile
       - aws-config
       - run:
           name: Deploy Stack to AWS
