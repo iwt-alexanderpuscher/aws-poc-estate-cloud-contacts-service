@@ -84,5 +84,3 @@ workflows:
           type: approval
           requires:
             - build
-      - slack/status:
-          webhook: $IWT_SMARTA_DEVOPS_WEBHOOK
