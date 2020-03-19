@@ -47,7 +47,7 @@ jobs:
           command: dotnet tool install -g Amazon.Lambda.Tools
       - run:
           name: Add .NET Core SDK tools
-          command: export PATH="$PATH:/root/.dotnet/tools"  >> ~/.bash_profile
+          command: export PATH="$PATH:/root/.dotnet/tools"
       - aws-config
       - run:
           name: Deploy Stack to AWS
