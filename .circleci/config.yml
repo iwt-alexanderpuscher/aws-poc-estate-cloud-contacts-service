@@ -96,10 +96,11 @@ workflows:
           filters:
             branches:
               only: master
-      - request-deploy:
+      - approve-deploy:
           type: approval
           requires:
             - build
       - deploy:
           requires:
-            - request-deploy
+            - slack/approval-notification
+            - approve-deploy
