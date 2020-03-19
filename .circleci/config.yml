@@ -47,10 +47,11 @@ jobs:
           command: |
             dotnet tool install -g Amazon.Lambda.Tools
             echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
+            apt-get -y install zip
       - aws-config
       - run:
           name: Deploy Stack to AWS
-          command: dotnet lambda deploy-serverless --project-location src/estate-cloud-contacts-service --stackname estate-cloud-contacts-service --profile personal --region $AWS_DEFAULT_REGION --s3-bucket $AWS_ARTIFACT_BUCKET
+          command: dotnet lambda deploy-serverless --stackname estate-cloud-contacts-service --profile personal --region $AWS_DEFAULT_REGION --s3-bucket $AWS_ARTIFACT_BUCKET
 
 orbs:
   slack: circleci/slack@3.4.2
