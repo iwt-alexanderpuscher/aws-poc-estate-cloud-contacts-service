@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run:
           name: Restore
-          command: dotnet restore
+          command: dotnet restore src\estate-cloud-contacts-service\estate-cloud-contacts-service.csproj
       - run:
           name: Build
           command: dotnet build src\estate-cloud-contacts-service\estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
