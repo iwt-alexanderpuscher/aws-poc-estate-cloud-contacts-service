@@ -38,12 +38,12 @@ jobs:
             trx2junit ~/project/test-results/*.trx
       - store_test_results:
           path: test-results
-      - sonarcloud/scan
       - run:
           name: Install dependencies
           command: |
             apt-get update
             apt-get install -y zip
+      - sonarcloud/scan
       - run:
           name: Generate Lambda Package
           command: |
