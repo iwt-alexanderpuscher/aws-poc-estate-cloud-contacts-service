@@ -29,6 +29,13 @@ jobs:
       - run:
           name: Test
           command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
+      - run:
+          name: test results
+          when: always
+          command: |
+              dotnet tool install -g trx2junit
+              export PATH="$PATH:/root/.dotnet/tools"
+              trx2junit ~/project/test-results/*.trx
       - store_test_results:
           path: test-results
       - persist_to_workspace:
@@ -43,11 +50,15 @@ jobs:
       - attach_workspace:
           at: src
       - run:
+          name: Install dependencies
+          command: |
+            apt-get update
+            apt-get install -y zip
+      - run:
           name: Install Lambda Tools
           command: |
             dotnet tool install -g Amazon.Lambda.Tools
             echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
-            apt-get -y install zip
       - aws-config
       - run:
           name: Deploy Stack to AWS
