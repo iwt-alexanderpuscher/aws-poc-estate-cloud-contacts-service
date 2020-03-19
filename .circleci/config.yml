@@ -43,6 +43,11 @@ jobs:
           paths:
             - estate-cloud-contacts-service
       - run:
+          name: Install dependencies
+          command: |
+            apt-get update
+            apt-get install -y zip
+      - run:
           name: Generate Lambda Package
           command: |
             dotnet tool install -g Amazon.Lambda.Tools
