@@ -33,9 +33,9 @@ jobs:
           name: test results
           when: always
           command: |
-              echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
-              dotnet tool install -g trx2junit
-              trx2junit ~/project/test-results/*.trx
+            echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
+            dotnet tool install -g trx2junit
+            trx2junit ~/project/test-results/*.trx
       - store_test_results:
           path: test-results
       - persist_to_workspace:
@@ -85,6 +85,4 @@ workflows:
           requires:
             - build
       - slack/status:
-          fail_only: true
-          only_for_branches: master
           webhook: $IWT_SMARTA_DEVOPS_WEBHOOK
