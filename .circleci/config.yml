@@ -28,9 +28,9 @@ jobs:
           command: dotnet build src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
       - run:
           name: Test
-          command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --no-build --configuration $BUILD_CONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger:trx --results-directory test-results
+          command: dotnet test test/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --no-build --configuration $BUILD_CONFIGURATION /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger:trx --results-directory ./test-results/
       - store_test_results:
-          path: test-results
+          path: ./test-results
       - persist_to_workspace:
           root: src
           paths:
