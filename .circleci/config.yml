@@ -25,13 +25,22 @@ jobs:
           command: |
             apt-get update
             apt-get install -y zip
-      - sonarcloud/scan
+            dotnet tool install -g dotnet-sonarscanner
+            dotnet tool install -g Amazon.Lambda.Tools
+            dotnet tool install -g trx2junit
+            echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
       - run:
           name: Restore
           command: dotnet restore src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj
       - run:
+          name: Start Sonarscanner
+          command: dotnet sonarscanner begin /k:"iwt-alexanderpuscher_aws-poc-estate-cloud-contacts-service" /n:"aws-poc-estate-cloud-contacts-service" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$SONAR_TOKEN /d:sonar.cs.opencover.reportsPaths="/root/project/tests/estate-cloud-contacts-service.Tests/coverage.opencover.xml"
+      - run:
           name: Build
           command: dotnet build src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
+      - run:
+          name: Finish Sonarscanner
+          command: dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
       - run:
           name: Test
           command: dotnet test tests/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
@@ -39,16 +48,12 @@ jobs:
           name: Convert Test Results
           when: always
           command: |
-            dotnet tool install -g trx2junit
-            export PATH="$PATH:/root/.dotnet/tools"
             trx2junit ~/project/test-results/*.trx
       - store_test_results:
           path: test-results
       - run:
           name: Generate Lambda Package
           command: |
-            dotnet tool install -g Amazon.Lambda.Tools
-            export PATH="$PATH:/root/.dotnet/tools"
             dotnet lambda package --project-location src/estate-cloud-contacts-service --configuration $BUILD_CONFIGURATION --framework netcoreapp2.1 --output-package ~/project/artifacts/deploy-package.zip
       - store_artifacts:
           path: ~/project/artifacts
@@ -81,7 +86,6 @@ jobs:
 
 orbs:
   slack: circleci/slack@3.4.2
-  sonarcloud: sonarsource/sonarcloud@1.0.1
 
 workflows:
   build-and-deploy:
