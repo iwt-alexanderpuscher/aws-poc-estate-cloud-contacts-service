@@ -28,7 +28,7 @@ jobs:
           command: dotnet build src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
       - run:
           name: Test
-          command: dotnet test tests/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
+          command: dotnet test tests/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
       - sonarcloud/scan
       - run:
           name: Convert Test Results
