@@ -20,6 +20,7 @@ jobs:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.1
     steps:
       - checkout
+      - sonarcloud/scan
       - run:
           name: Restore
           command: dotnet restore src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj
@@ -29,7 +30,6 @@ jobs:
       - run:
           name: Test
           command: dotnet test tests/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
-      - sonarcloud/scan
       - run:
           name: Convert Test Results
           when: always
