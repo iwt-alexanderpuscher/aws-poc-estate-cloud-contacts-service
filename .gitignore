@@ -32,6 +32,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+config_compiled.yml
 
 # Visual Studio 2015
 .vs/

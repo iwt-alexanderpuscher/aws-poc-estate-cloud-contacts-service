@@ -99,7 +99,8 @@ workflows:
       - approve-deploy:
           type: approval
           requires:
-            - slack/approval-notification
+            # - slack/approval-notification
+            - build
       - deploy:
           requires:
             - approve-deploy
