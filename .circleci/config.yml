@@ -20,6 +20,11 @@ jobs:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.1
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update
+            apt-get install -y zip
       - sonarcloud/scan
       - run:
           name: Restore
@@ -39,11 +44,6 @@ jobs:
             trx2junit ~/project/test-results/*.trx
       - store_test_results:
           path: test-results
-      - run:
-          name: Install dependencies
-          command: |
-            apt-get update
-            apt-get install -y zip
       - run:
           name: Generate Lambda Package
           command: |
