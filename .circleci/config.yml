@@ -29,6 +29,7 @@ jobs:
       - run:
           name: Test
           command: dotnet test tests/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
+      - sonarcloud/scan
       - run:
           name: Convert Test Results
           when: always
@@ -43,7 +44,6 @@ jobs:
           command: |
             apt-get update
             apt-get install -y zip
-      - sonarcloud/scan
       - run:
           name: Generate Lambda Package
           command: |
@@ -88,14 +88,14 @@ workflows:
     jobs:
       - build:
           context: SonarCloud
-      - slack/approval-notification:
-          message: Pending approval
-          webhook: $IWT_SMARTA_DEVOPS_WEBHOOK
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      # - slack/approval-notification:
+      #     message: Pending approval
+      #     webhook: $IWT_SMARTA_DEVOPS_WEBHOOK
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
       - approve-deploy:
           type: approval
           requires:
