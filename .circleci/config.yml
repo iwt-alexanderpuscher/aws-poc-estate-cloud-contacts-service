@@ -34,7 +34,7 @@ jobs:
           command: dotnet restore src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj
       - run:
           name: Start Sonarscanner
-          command: dotnet sonarscanner begin /k:"iwt-alexanderpuscher_aws-poc-estate-cloud-contacts-service" /n:"aws-poc-estate-cloud-contacts-service" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$SONAR_TOKEN /d:sonar.cs.opencover.reportsPaths="/root/project/tests/estate-cloud-contacts-service.Tests/coverage.opencover.xml"
+          command: dotnet sonarscanner begin /k:"iwt-alexanderpuscher_aws-poc-estate-cloud-contacts-service" /n:"aws-poc-estate-cloud-contacts-service" /organization:"iwt-alexanderpuscher" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$SONAR_TOKEN /d:sonar.cs.opencover.reportsPaths="/root/project/tests/estate-cloud-contacts-service.Tests/coverage.opencover.xml"
       - run:
           name: Build
           command: dotnet build src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj --configuration $BUILD_CONFIGURATION
