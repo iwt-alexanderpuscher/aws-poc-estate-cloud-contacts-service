@@ -25,10 +25,12 @@ jobs:
           command: |
             apt-get update
             apt-get install -y zip
+            apt-get install default-jre
             dotnet tool install -g dotnet-sonarscanner
             dotnet tool install -g Amazon.Lambda.Tools
             dotnet tool install -g trx2junit
             echo 'export PATH="$PATH:/root/.dotnet/tools"' >> $BASH_ENV
+            echo 'JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"'
       - run:
           name: Restore
           command: dotnet restore src/estate-cloud-contacts-service/estate-cloud-contacts-service.csproj
@@ -46,9 +48,7 @@ jobs:
           command: dotnet test tests/estate-cloud-contacts-service.Tests/estate-cloud-contacts-service.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --configuration $BUILD_CONFIGURATION --logger:trx --results-directory ~/project/test-results
       - run:
           name: Convert Test Results
-          when: always
-          command: |
-            trx2junit ~/project/test-results/*.trx
+          command: trx2junit ~/project/test-results/*.trx
       - store_test_results:
           path: test-results
       - run:
